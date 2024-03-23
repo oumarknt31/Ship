@@ -5,6 +5,9 @@ using UnityEngine;
 public class Ship : MonoBehaviour
 {
     private Rigidbody2D rb2d;
+    private float colliderRadius;
+
+    //CircleCollider2D collider = GetComponent<CircleCollider2D>();
     private Vector2 thrustDirection = new Vector2(1, 0);
     [SerializeField] private float thrustForce = 10f;
 
@@ -13,6 +16,8 @@ public class Ship : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        CircleCollider2D collider = GetComponent<CircleCollider2D>();
+        colliderRadius = collider.radius;
         //Vector2D thrustDirection = new Vector2D()
     }
 
@@ -41,4 +46,33 @@ public class Ship : MonoBehaviour
             }
         }
     }
+
+    void OnBecameInvisible()
+    {
+        Vector2 currentPosition = transform.position;
+        Vector2 newPosition = currentPosition;
+
+        // Check exit direction and adjust ship's position accordingly
+        if (currentPosition.x < ScreenUtils.ScreenLeft - colliderRadius)
+        {
+            newPosition.x = ScreenUtils.ScreenRight + colliderRadius;
+        }
+        else if (currentPosition.x > ScreenUtils.ScreenRight + colliderRadius)
+        {
+            newPosition.x = ScreenUtils.ScreenLeft - colliderRadius;
+        }
+
+        if (currentPosition.y < ScreenUtils.ScreenBottom - colliderRadius)
+        {
+            newPosition.y = ScreenUtils.ScreenTop + colliderRadius;
+        }
+        else if (currentPosition.y > ScreenUtils.ScreenTop + colliderRadius)
+        {
+            newPosition.y = ScreenUtils.ScreenBottom - colliderRadius;
+        }
+
+        // Apply new position
+        transform.position = newPosition;
+    }
 }
+
