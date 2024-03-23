@@ -6,10 +6,11 @@ public class Ship : MonoBehaviour
 {
     private Rigidbody2D rb2d;
     private float colliderRadius;
-
+    
     //CircleCollider2D collider = GetComponent<CircleCollider2D>();
     private Vector2 thrustDirection = new Vector2(1, 0);
     [SerializeField] private float thrustForce = 10f;
+    [SerializeField] private float RotateDegreesPerSecond = 100f;
 
 
     // Start is called before the first frame update
@@ -24,8 +25,20 @@ public class Ship : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // Check for input from the Rotate axis
+        float rotationInput = Input.GetAxis("Rotate");
+
+        // Calculate rotation amount based on input and rotation speed
+        float rotationAmount = RotateDegreesPerSecond * Time.deltaTime;
+        if (rotationInput < 0)
+        {
+            rotationAmount *= -1;
+        }
+
+        // Apply rotation around the ship's vertical axis (Z-axis in Unity's 3D space)
+        transform.Rotate(Vector3.forward, rotationAmount);
     }
+
 
     void FixedUpdate()
     {

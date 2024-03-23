@@ -362,7 +362,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4b15a95603b9410d8a5312ed1df0bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustForce: 30
+  thrustForce: 40
+  RotateDegreesPerSecond: 100
 --- !u!50 &2070359371
 Rigidbody2D:
   serializedVersion: 4
